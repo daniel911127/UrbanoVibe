@@ -1,14 +1,14 @@
-// let nombre = prompt("Ingresa tu nombre: ");
-// let edad = Number(prompt("Ingresa tu edad: "));
-// do {
-//   if (edad < 18) {
-//     alert("Debes ser mayor de edad para comprar en esta tienda");
-//     nombre = prompt("Ingresa tu nombre: ");
-//     edad = Number(prompt("Ingresa tu edad: "));
-//   }
-// } while (edad < 18);
+let nombre = prompt("Ingresa tu nombre: ");
+let edad = Number(prompt("Ingresa tu edad: "));
+do {
+  if (edad < 18) {
+    alert("Debes ser mayor de edad para comprar en esta tienda");
+    nombre = prompt("Ingresa tu nombre: ");
+    edad = Number(prompt("Ingresa tu edad: "));
+  }
+} while (edad < 18);
 
-// alert("Bienvenido " + nombre + ", revisa nuestro catálogo de productos");
+alert("Bienvenido " + nombre + ", revisa nuestro catálogo de productos");
 
 class Producto {
   constructor(nombre, precio, categoria, cantidad) {
