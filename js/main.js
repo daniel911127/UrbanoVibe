@@ -1,3 +1,7 @@
+//RUTAS IMAGENES:
+// 1. ../assets/camisetaAdidas2.jpg
+// 2. ../assets/zapatillasNike.jpg
+
 // let nombre = prompt("Ingresa tu nombre: ");
 // let edad = Number(prompt("Ingresa tu edad: "));
 // do {
@@ -20,12 +24,15 @@ class Producto {
   }
   sumarIva() {
     this.precio = this.precio * 1.21;
+    this.precio = Math.round(this.precio * 100) / 100;
   }
   vender(cantidadCompra) {
     this.cantidad = this.cantidad - cantidadCompra;
   }
 }
+
 let productos = [];
+
 const producto1 = new Producto(
   'Zapatillas Nike',
   80,
@@ -61,13 +68,13 @@ productos.push(producto1);
 productos.push(producto2);
 productos.push(producto3);
 productos.push(producto4);
+alert(
+  'para una mejor experiancia en el proceso de agregar productos use en el prompt de imagen cualquiera de las 2 rutas que aparecen en el main.js en la linea 1'
+);
 for (const product of productos) {
   product.sumarIva();
 }
-console.log('Automaticamente suma el iva a todos los productos:', productos);
-console.log('antes de ingresar el producto', productos);
-
-let producto = [];
+console.log(productos);
 let agregarProducto = document.getElementById('agregar');
 function validar(listaproductos) {
   let nombre = prompt('Ingresa el nombre del producto: ');
@@ -78,33 +85,39 @@ function validar(listaproductos) {
   item = new Producto(nombre, precio, categoria, cantidad, imagenUrl);
 
   listaproductos.push(item);
-  return listaproductos;
+  alert('Producto Agregado!!');
+  console.log('Producto agregado', listaproductos);
+  const ultimo = listaproductos[listaproductos.length - 1];
+  ultimo.sumarIva();
+  mostrarProductos();
 }
-console.log(validar(productos));
-
-agregarProducto.addEventListener('click', validar);
+agregarProducto.addEventListener('click', () => validar(productos));
 
 let containerProductos = document.getElementById('productos');
 
-for (const product of productos) {
-  const card = document.createElement('div');
-  card.classList.add(
-    'card',
-    'col-4',
-    'm-4',
-    'border',
-    'border-dark',
-    'cardProducto'
-  );
-  card.innerHTML = `
-    <img src="${product.imagenUrl}" class="card-img-top imagenProducto" alt="producto"/>
-    <div class="card-body d-flex justify-content-center flex-column">
-      <h5 class="card-title d-flex justify-content-center">${product.nombre}</h5>
-      <p class="card-text d-flex justify-content-center">Categoría: ${product.categoria}</p>
-      <p class="card-text d-flex justify-content-center">Cantidad: ${product.cantidad}</p>
-      <p class="card-text d-flex justify-content-center">Precio: $${product.precio}</p>
-      <input id="comprar" type="submit" value="Comprar" class="d-flex justify-content-center comprar"/>
-    </div>
-  `;
-  containerProductos.appendChild(card);
+function mostrarProductos() {
+  containerProductos.innerHTML = '';
+  for (const product of productos) {
+    const card = document.createElement('div');
+    card.classList.add(
+      'card',
+      'col-4',
+      'm-4',
+      'border',
+      'border-dark',
+      'cardProducto'
+    );
+    card.innerHTML = `
+      <img src="${product.imagenUrl}" class="card-img-top imagenProducto" alt="producto"/>
+      <div class="card-body d-flex justify-content-center flex-column">
+        <h5 class="card-title d-flex justify-content-center">${product.nombre}</h5>
+        <p class="card-text d-flex justify-content-center">Categoría: ${product.categoria}</p>
+        <p class="card-text d-flex justify-content-center">Cantidad: ${product.cantidad}</p>
+        <p class="card-text d-flex justify-content-center">Precio: $${product.precio}</p>
+        <input id="comprar" type="submit" value="Comprar" class="d-flex justify-content-center comprar"/>
+      </div>
+    `;
+    containerProductos.appendChild(card);
+  }
 }
+mostrarProductos();
