@@ -33,6 +33,36 @@ ul{
   opacity: 1;
   filter: contrast(120%);
 }
+.contenidoPresentacion{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contenidoImagen{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.presentacion{
+  border-radius: 40%;
+}
+.cardProducto{
+  border-radius: 25px;
+}
+.imagenProducto{
+  height: 250px;
+  object-fit: contain;
+}
+.comprar{
+  background-color: white;
+  border-radius: 10px;
+  width: 150px;
+  margin-left:27%;
+}
+.agregar{
+  background-color:orange;
+  color:rgb(0, 0, 0)
+}
 @media(max-width:576px){
   .menuUser{
     flex-direction: column;
