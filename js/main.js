@@ -2,18 +2,6 @@
 // 1. ../assets/camisetaAdidas2.jpg
 // 2. ../assets/zapatillasNike.jpg
 
-// let nombre = prompt("Ingresa tu nombre: ");
-// let edad = Number(prompt("Ingresa tu edad: "));
-// do {
-//   if (edad < 18) {
-//     alert("Debes ser mayor de edad para comprar en esta tienda");
-//     nombre = prompt("Ingresa tu nombre: ");
-//     edad = Number(prompt("Ingresa tu edad: "));
-//   }
-// } while (edad < 18);
-
-// alert("Bienvenido " + nombre + ", revisa nuestro catálogo de productos");
-
 class Producto {
   constructor(nombre, precio, categoria, cantidad, imagenUrl) {
     this.nombre = nombre;
@@ -74,7 +62,11 @@ alert(
 for (const product of productos) {
   product.sumarIva();
 }
-console.log(productos);
+
+const storage = localStorage.getItem('productos');
+const parse = JSON.parse(storage);
+//console.log('al inicio: ', parse);
+
 let agregarProducto = document.getElementById('agregar');
 function validar(listaproductos) {
   let nombre = prompt('Ingresa el nombre del producto: ');
@@ -85,19 +77,29 @@ function validar(listaproductos) {
   item = new Producto(nombre, precio, categoria, cantidad, imagenUrl);
 
   listaproductos.push(item);
-  alert('Producto Agregado!!');
-  console.log('Producto agregado', listaproductos);
   const ultimo = listaproductos[listaproductos.length - 1];
   ultimo.sumarIva();
-  mostrarProductos();
+  let store = JSON.stringify(listaproductos);
+  alert('Producto Agregado!!');
+  console.log('Producto agregado', listaproductos);
+  //console.log(store);
+  localStorage.setItem('productos', store);
+  let productoLS = JSON.parse(localStorage.getItem('productos'));
+  //console.log(productoLS);
+  mostrarProductos(productoLS);
 }
-agregarProducto.addEventListener('click', () => validar(productos));
+
+agregarProducto.addEventListener('click', () =>
+  storage == null ? validar(productos) : validar(parse)
+);
 
 let containerProductos = document.getElementById('productos');
 
-function mostrarProductos() {
+storage == null ? mostrarProductos(productos) : mostrarProductos(parse);
+
+function mostrarProductos(array) {
   containerProductos.innerHTML = '';
-  for (const product of productos) {
+  for (const product of array) {
     const card = document.createElement('div');
     card.classList.add(
       'card',
@@ -120,4 +122,3 @@ function mostrarProductos() {
     containerProductos.appendChild(card);
   }
 }
-mostrarProductos();
