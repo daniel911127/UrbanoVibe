@@ -1,71 +1,42 @@
 //RUTAS IMAGENES:
 // 1. ../assets/camisetaAdidas2.jpg
 // 2. ../assets/zapatillasNike.jpg
-
-class Producto {
-  constructor(nombre, precio, categoria, cantidad, imagenUrl) {
-    this.nombre = nombre;
-    this.precio = parseFloat(precio);
-    this.categoria = categoria;
-    this.cantidad = Number(cantidad);
-    this.imagenUrl = imagenUrl;
-  }
-  sumarIva() {
-    this.precio = this.precio * 1.21;
-    this.precio = Math.round(this.precio * 100) / 100;
-  }
-  vender(cantidadCompra) {
-    this.cantidad = this.cantidad - cantidadCompra;
-  }
-}
+import { Producto } from './ProductoClass.js';
 
 let productos = [];
+let datos;
 
-const producto1 = new Producto(
-  'Zapatillas Nike',
-  80,
-  'calzado',
-  20,
-  '../assets/zapatillasNike.jpeg'
-);
-const producto2 = new Producto(
-  'Reloj CASIO',
-  30,
-  'accesorios',
-  12,
-  '../assets/relojCasio.jpg'
-);
-const producto3 = new Producto(
-  'Camiseta Adidas',
-  60,
-  'ropa',
-  10,
-  '../assets/camisetaAdidas.jpeg'
-);
-const producto4 = new Producto(
-  'Reloj ROLEX',
-  200,
-  'accesorios',
-  15,
-  '../assets/relojRolex.jpg'
-);
+const pedirDatos = async () => {
+  let peticion = await fetch('../JSON/Productos.json');
+  let dataParser = await peticion.json();
 
-producto1.vender(2);
+  datos = JSON.stringify(dataParser);
+  localStorage.setItem('productos', datos);
+};
 
-productos.push(producto1);
-productos.push(producto2);
-productos.push(producto3);
-productos.push(producto4);
+pedirDatos();
+let data = JSON.parse(localStorage.getItem('productos'));
 alert(
   'para una mejor experiancia en el proceso de agregar productos use en el prompt de imagen cualquiera de las 2 rutas que aparecen en el main.js en la linea 1'
 );
-for (const product of productos) {
-  product.sumarIva();
+let producto;
+for (const product of data) {
+  producto = new Producto(
+    product.id,
+    product.nombre,
+    product.precio,
+    product.categoria,
+    product.cantidad,
+    product.imagenUrl
+  );
+  producto.sumarIva();
+  productos.push(producto);
 }
+
+console.log(productos);
 
 const storage = localStorage.getItem('productos');
 const parse = JSON.parse(storage);
-//console.log('al inicio: ', parse);
 
 let agregarProducto = document.getElementById('agregar');
 function validar(listaproductos) {
@@ -74,7 +45,8 @@ function validar(listaproductos) {
   let categoria = prompt('Ingresa la categoria del producto: ');
   let cantidad = parseInt(prompt('Ingresa la cantidad del producto: '));
   let imagenUrl = prompt('Ingresa la imagen del producto: ');
-  item = new Producto(nombre, precio, categoria, cantidad, imagenUrl);
+  let id = listaproductos.length + 1;
+  let item = new Producto(id, nombre, precio, categoria, cantidad, imagenUrl);
 
   listaproductos.push(item);
   const ultimo = listaproductos[listaproductos.length - 1];
@@ -82,10 +54,10 @@ function validar(listaproductos) {
   let store = JSON.stringify(listaproductos);
   alert('Producto Agregado!!');
   console.log('Producto agregado', listaproductos);
-  //console.log(store);
+
   localStorage.setItem('productos', store);
   let productoLS = JSON.parse(localStorage.getItem('productos'));
-  //console.log(productoLS);
+
   mostrarProductos(productoLS);
 }
 

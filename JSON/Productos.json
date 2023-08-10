@@ -1,5 +1,6 @@
 [
   {
+  "id":1,  
   "nombre":"Zapatillas Nike",
   "precio":80,
   "categoria":"calzado",
@@ -7,6 +8,7 @@
   "imagenUrl":"../assets/zapatillasNike.jpeg"
 },
 {
+  "id":2, 
   "nombre":"Reloj CASIO",
   "precio":30,
   "categoria":"accesorios",
@@ -14,6 +16,7 @@
   "imagenUrl":"../assets/relojCasio.jpg"
 },
 {
+  "id":3, 
   "nombre":"Camiseta Adidas",
   "precio":60,
   "categoria":"ropa",
@@ -21,6 +24,7 @@
   "imagenUrl":"../assets/camisetaAdidas.jpeg"
 },
 {
+  "id":4, 
   "nombre":"Reloj ROLEX",
   "precio":200,
   "categoria":"accesorios",
